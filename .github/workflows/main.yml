@@ -1,36 +1,48 @@
-# This is a basic workflow to help you get started with Actions
+import discord
+import os
 
-name: CI
+client = discord.Client()
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+def talkingPrivileges(message):
+  @client.event
+  async def on_message(message):
+   if str(message.channel) == "general" and message.content !="Sprinkler":
+      await message.channel.purge(limit=1)
+     
+@client.event
+async def on_ready():
+    print('We have logged in as {0.user}'.format(client))
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+        nonoWords = ['Sprinkler']
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    if message.content.startswith('Hello'):
+        await message.channel.send('Hello!')
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+    if message.content.startswith('Potato'):
+        await message.channel.send('I like potatoes!')
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    if message.content.startswith('Dave'):
+      await message.channel.send('@MasterShinken#8339')
+
+    if message.content.startswith('Fighty'):
+      await message.channel.send('Thats me!')
+
+    if message.content.startswith('Whats Guild Hall?'):
+      await message.channel.send('Guild Hall is an educational makers space where you can do a lot of things. At Guild Hall you can do art and design, mechanical engineering, carpentry, coding, and so much more! You can even start your own buissness at Guild Hall. At Guild Hall, we teach you so you can figure it out yourselfs. We will start you off, and help you along the way, but most of it will be you using your problem solving skills and other resources. Dave, the owner, will probably give you this speech in person, along with showing you some stuff when you enter Guild Hall for the first time, but you can look at it here to! Dave also has a coffee addiction.')
+
+    if message.content.startswith('Whats the Pythagorean Theorem'):
+      await message.channel.send('a^2+b^2=c^2') 
+
+    if 'Sprinkler' in message.content: 
+      await message.delete()
+      await message.channel.send('@MasterShinken#8339 Thats a bad word, you just got exposed, get ready to get cancelled!')
+      
+#talkingPrivileges('message') 
+
+
+client.run(os.getenv('TOKEN')) 
