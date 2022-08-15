@@ -1,5 +1,6 @@
 import discord
 import os
+DISCORD_BOT_TOKEN=OTk2MTUyNjYzMTgxOTAxOTA2.GpwQ_n.8ezL8cJpXp15FHMElTWj9z4tk46vYr5D4v1A00
 
 client = discord.Client()
 
